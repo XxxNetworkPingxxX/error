@@ -1,0 +1,113 @@
+local Player = game:GetService("Players").LocalPlayer
+local PlayerGui = Player:WaitForChild("PlayerGui")
+
+local function createRandomPopup()
+	local ScreenGui = Instance.new("ScreenGui")
+	ScreenGui.Name = "ErrorPopupUI_" .. tick()
+	ScreenGui.ResetOnSpawn = false
+	ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+	ScreenGui.IgnoreGuiInset = true
+	
+	local screenSize = workspace.CurrentCamera.ViewportSize
+	local popupWidth = 300
+	local popupHeight = 120
+	
+	local maxX = screenSize.X - popupWidth
+	local maxY = screenSize.Y - popupHeight
+	local randomX = math.random(0, maxX)
+	local randomY = math.random(0, maxY)
+	
+	local MainFrame = Instance.new("Frame")
+	MainFrame.Name = "MainFrame"
+	MainFrame.Size = UDim2.new(0, popupWidth, 0, popupHeight)
+	MainFrame.Position = UDim2.new(0, randomX, 0, randomY)
+	MainFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	MainFrame.BackgroundTransparency = 0
+	MainFrame.BorderSizePixel = 1
+	MainFrame.BorderColor3 = Color3.fromRGB(180, 180, 180)
+	MainFrame.ZIndex = 1
+	
+	local RedXButton = Instance.new("TextButton")
+	RedXButton.Name = "RedXButton"
+	RedXButton.Size = UDim2.new(0, 30, 0, 30)
+	RedXButton.Position = UDim2.new(0, 15, 0, 15)
+	RedXButton.BackgroundColor3 = Color3.fromRGB(232, 17, 35)
+	RedXButton.BackgroundTransparency = 0
+	RedXButton.BorderSizePixel = 0
+	RedXButton.Text = "×"
+	RedXButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+	RedXButton.TextTransparency = 0
+	RedXButton.Font = Enum.Font.SourceSansBold
+	RedXButton.TextSize = 18
+	RedXButton.TextScaled = true
+	RedXButton.AutoButtonColor = false
+	RedXButton.Active = false
+	RedXButton.Selectable = false
+	
+	local XCorner = Instance.new("UICorner")
+	XCorner.CornerRadius = UDim.new(1, 0)
+	XCorner.Parent = RedXButton
+	
+	local BottomBar = Instance.new("Frame")
+	BottomBar.Name = "BottomBar"
+	BottomBar.Size = UDim2.new(1, 0, 0, 30)
+	BottomBar.Position = UDim2.new(0, 0, 1, -30)
+	BottomBar.BackgroundColor3 = Color3.fromRGB(240, 240, 240)
+	BottomBar.BackgroundTransparency = 0
+	BottomBar.BorderSizePixel = 0
+	
+	local OKButton = Instance.new("TextButton")
+	OKButton.Name = "OKButton"
+	OKButton.Size = UDim2.new(0, 60, 0, 20)
+	OKButton.Position = UDim2.new(1, -70, 0.5, -10)
+	OKButton.BackgroundColor3 = Color3.fromRGB(245, 245, 245)
+	OKButton.BackgroundTransparency = 0
+	OKButton.BorderSizePixel = 1
+	OKButton.BorderColor3 = Color3.fromRGB(0, 120, 215)
+	OKButton.Text = "OK"
+	OKButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+	OKButton.TextTransparency = 0
+	OKButton.Font = Enum.Font.SourceSans
+	OKButton.TextSize = 12
+	OKButton.ZIndex = 2
+	
+	local DashedBorder = Instance.new("UIStroke")
+	DashedBorder.Name = "DashedBorder"
+	DashedBorder.Color = Color3.fromRGB(0, 120, 215)
+	DashedBorder.Thickness = 1
+	DashedBorder.LineJoinMode = Enum.LineJoinMode.Round
+	DashedBorder.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+	
+	RedXButton.Parent = MainFrame
+	OKButton.Parent = BottomBar
+	BottomBar.Parent = MainFrame
+	DashedBorder.Parent = OKButton
+	MainFrame.Parent = ScreenGui
+	ScreenGui.Parent = PlayerGui
+	
+	OKButton.MouseButton1Click:Connect(function()
+		ScreenGui:Destroy()
+	end)
+	
+	OKButton.MouseEnter:Connect(function()
+		OKButton.BackgroundColor3 = Color3.fromRGB(235, 235, 235)
+	end)
+	
+	OKButton.MouseLeave:Connect(function()
+		OKButton.BackgroundColor3 = Color3.fromRGB(245, 245, 245)
+	end)
+	
+	return ScreenGui
+end
+
+coroutine.wrap(function()
+	wait(3)
+	while true do
+		for i = 1, 4 do
+			coroutine.wrap(function()
+				createRandomPopup()
+			end)()
+		end
+		wait(0.1)
+	end
+end)()
